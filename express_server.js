@@ -3,12 +3,13 @@ const app = express()
 const PORT = 3000;
 const bodyParser = require('body-parser');
 
+
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', function (req, res) {
-  res.send('Hello World')
+  res.render('login_page')
 })
 
 app.listen(PORT, () => {
@@ -23,6 +24,10 @@ app.get("/login", (req, res) => {
 
 app.get("/dashboard", (req, res) => {
   res.render("dashboard_page");
+});
+
+app.get("/camera1", (req, res) => {
+  res.render("camera1_page");
 });
 
 
