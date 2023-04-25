@@ -34,7 +34,6 @@ app.get("/camera2", (req, res) => {
   res.render("camera2_page");
 });
 
-
 //post routes
 app.post("/login", (req, res) => {
   console.log(req.body.email)

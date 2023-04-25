@@ -1,15 +1,14 @@
 <html>
   <head>
     <title>Camera 2 Page</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
     <canvas id="bg"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
-
     <script type="text/javascript">
       const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xfffff);
 
       const camera = new THREE.PerspectiveCamera(
         75,
@@ -19,57 +18,113 @@
       );
 
       const renderer = new THREE.WebGL1Renderer({
-        canvas: document.querySelector("#bg")
+        canvas: document.querySelector("#bg"),
       });
 
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.position.set(0,0,30);
-      camera.lookAt(0, 0, 0);
+      camera.position.setZ(30);
+      camera.position.setX(-3);
 
       renderer.render(scene, camera);
 
+      //cube
+
       const geometry = new THREE.BoxGeometry(4, 6, 7);
-      const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+      const material = new THREE.MeshStandardMaterial({ color: 0xfffff });
       const cube = new THREE.Mesh(geometry, material);
+
       scene.add(cube);
 
-      const pointLight = new THREE.PointLight(0xfffff)
-      pointLight.position.set(10,5,5)
-      scene.add(pointLight)
+      //Lighting
+      const pointLight = new THREE.PointLight(0xfffff);
+      pointLight.position.set(10, 5, 5);
+      scene.add(pointLight);
 
       // const ambientLight = new THREE.AmbientLight(0xfffff);
       // scene.add(ambientLight)
 
-      const lightHelper = new THREE.PointLightHelper(pointLight)
+      //Helpers
+
+      const lightHelper = new THREE.PointLightHelper(pointLight);
       const gridHelper = new THREE.GridHelper(200, 50);
-      scene.add(lightHelper, gridHelper)
+      scene.add(lightHelper, gridHelper);
 
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+      //stars
       function addStar() {
         const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-        const material = new THREE.MeshStandardMaterial({color: 0xfffff})
+        const material = new THREE.MeshStandardMaterial({ color: 0xfffff });
         const star = new THREE.Mesh(geometry, material);
 
-        const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
-        star.position.set(x,y,z)
-        scene.add(star)
+        const [x, y, z] = Array(3)
+          .fill()
+          .map(() => THREE.MathUtils.randFloatSpread(100));
+        star.position.set(x, y, z);
+        scene.add(star);
       }
 
-      Array(200).fill().forEach(addStar)
+      Array(200).fill().forEach(addStar);
 
-      const textureLoader = new THREE.TextureLoader();
-      const spaceTexture = textureLoader.load('background.jpeg', () =>{
-        scene.background = spaceTexture;
-      });
+      //background
 
+      // const spaceTexture = new THREE.TextureLoader().load("https://media.istockphoto.com/id/1292355556/photo/hotel-reception-lobby.jpg?s=612x612&w=0&k=20&c=fz0CfzVB0r2U6QoZ8KpHIOUYpLUICDTIZm1srOKK3u8=");
+      // scene.background = spaceTexture;
 
+      //avatar
+
+      const jeffTexture = new THREE.TextureLoader().load("https://res.cloudinary.com/gimmersta-wallpaper/image/upload/c_fill,f_auto,fl_progressive,q_auto,w_576,h_840/v1638283414/articles/R10961_product.jpg");
+
+      const jeff = new THREE.Mesh(
+        new THREE.BoxGeometry(3, 3, 3),
+        new THREE.MeshBasicMaterial({ map: jeffTexture })
+      );
+
+      scene.add(jeff);
+
+      // Moon
+      const moonTexture = new THREE.TextureLoader().load(
+        "https://res.cloudinary.com/gimmersta-wallpaper/image/upload/c_fill,f_auto,fl_progressive,q_auto,w_576,h_840/v1638283414/articles/R10961_product.jpg",
+        function (texture) {
+          console.log("Moon texture loaded successfully.");
+        },
+        function (error) {
+          console.error("Error loading moon texture:", error);
+        }
+      );
+
+      const normalTexture = new THREE.TextureLoader().load(
+        "https://res.cloudinary.com/gimmersta-wallpaper/image/upload/c_fill,f_auto,fl_progressive,q_auto,w_576,h_840/v1638283414/articles/R10961_product.jpg",
+        function (texture) {
+          console.log("Normal texture loaded successfully.");
+        },
+        function (error) {
+          console.error("Error loading normal texture:", error);
+        }
+      );
+
+      const moon = new THREE.Mesh(
+        new THREE.SphereGeometry(3, 32, 32),
+        new THREE.MeshStandardMaterial({
+          map: moonTexture,
+          normalMap: normalTexture,
+        })
+      );
+
+      scene.add(moon);
+
+      moon.position.z = 30;
+      moon.position.setX(-10);
+
+      jeff.position.z = -5;
+      jeff.position.x = 2;
+
+      //animation loop
 
       function animate() {
         requestAnimationFrame(animate);
         controls.update();
-
         renderer.render(scene, camera);
       }
 
