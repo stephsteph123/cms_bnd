@@ -30,11 +30,11 @@
 
       //cube
 
-      const geometry = new THREE.BoxGeometry(4, 6, 7);
-      const material = new THREE.MeshStandardMaterial({ color: 0xfffff });
-      const cube = new THREE.Mesh(geometry, material);
+      // const geometry = new THREE.BoxGeometry(4, 6, 7);
+      // const material = new THREE.MeshStandardMaterial({ color: 0xfffff });
+      // const cube = new THREE.Mesh(geometry, material);
 
-      scene.add(cube);
+      // scene.add(cube);
 
       //Lighting
       const pointLight = new THREE.PointLight(0xfffff);
@@ -53,19 +53,19 @@
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
       //stars
-      function addStar() {
-        const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-        const material = new THREE.MeshStandardMaterial({ color: 0xfffff });
-        const star = new THREE.Mesh(geometry, material);
+      // function addStar() {
+      //   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
+      //   const material = new THREE.MeshStandardMaterial({ color: 0xfffff });
+      //   const star = new THREE.Mesh(geometry, material);
 
-        const [x, y, z] = Array(3)
-          .fill()
-          .map(() => THREE.MathUtils.randFloatSpread(100));
-        star.position.set(x, y, z);
-        scene.add(star);
-      }
+      //   const [x, y, z] = Array(3)
+      //     .fill()
+      //     .map(() => THREE.MathUtils.randFloatSpread(100));
+      //   star.position.set(x, y, z);
+      //   scene.add(star);
+      // }
 
-      Array(200).fill().forEach(addStar);
+      // Array(200).fill().forEach(addStar);
 
       //background
 
@@ -74,14 +74,16 @@
 
       //avatar
 
-      const jeffTexture = new THREE.TextureLoader().load("https://res.cloudinary.com/gimmersta-wallpaper/image/upload/c_fill,f_auto,fl_progressive,q_auto,w_576,h_840/v1638283414/articles/R10961_product.jpg");
+      const jeffTexture = new THREE.TextureLoader().load(
+        "https://res.cloudinary.com/gimmersta-wallpaper/image/upload/c_fill,f_auto,fl_progressive,q_auto,w_576,h_840/v1638283414/articles/R10961_product.jpg"
+      );
 
       const jeff = new THREE.Mesh(
         new THREE.BoxGeometry(3, 3, 3),
         new THREE.MeshBasicMaterial({ map: jeffTexture })
       );
 
-      scene.add(jeff);
+      // scene.add(jeff);
 
       // Moon
       const moonTexture = new THREE.TextureLoader().load(
@@ -119,6 +121,49 @@
 
       jeff.position.z = -5;
       jeff.position.x = 2;
+
+      //chair1
+
+      // Create a base for the chair
+      let baseGeometry = new THREE.BoxGeometry(4, 0.5, 4);
+      let baseMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+      let base = new THREE.Mesh(baseGeometry, baseMaterial);
+      scene.add(base);
+
+      // Create the backrest for the chair
+      let backrestGeometry = new THREE.BoxGeometry(4, 2, 0.5);
+      let backrestMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+      let backrest = new THREE.Mesh(backrestGeometry, backrestMaterial);
+      backrest.position.y = 1.5;
+      backrest.position.z = -1.75;
+      scene.add(backrest);
+
+      // Create the seat of the chair
+      let seatGeometry = new THREE.BoxGeometry(4, 0.5, 3);
+      let seatMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+      let seat = new THREE.Mesh(seatGeometry, seatMaterial);
+      seat.position.y = 0.75;
+      scene.add(seat);
+
+      // Create legs for the chair
+      let legGeometry = new THREE.CylinderGeometry(0.25, 0.25, 1, 32);
+      let legMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+
+      let frontLeftLeg = new THREE.Mesh(legGeometry, legMaterial);
+      frontLeftLeg.position.set(-1.5, -0.5, 1.5);
+      scene.add(frontLeftLeg);
+
+      let frontRightLeg = new THREE.Mesh(legGeometry, legMaterial);
+      frontRightLeg.position.set(1.5, -0.5, 1.5);
+      scene.add(frontRightLeg);
+
+      let backLeftLeg = new THREE.Mesh(legGeometry, legMaterial);
+      backLeftLeg.position.set(-1.5, -0.5, -1.5);
+      scene.add(backLeftLeg);
+
+      let backRightLeg = new THREE.Mesh(legGeometry, legMaterial);
+      backRightLeg.position.set(1.5, -0.5, -1.5);
+      scene.add(backRightLeg);
 
       //animation loop
 
