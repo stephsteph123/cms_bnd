@@ -30,6 +30,10 @@ app.get("/camera1", (req, res) => {
   res.render("camera1_page");
 });
 
+app.get("/camera2", (req, res) => {
+  res.render("camera2_page");
+});
+
 
 //post routes
 app.post("/login", (req, res) => {
