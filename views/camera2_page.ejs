@@ -4,18 +4,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
-    <!-- Canvas element to hold the 3D scene -->
     <canvas id="bg"></canvas>
-    
-    <!-- Three.js library scripts -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
 
     <script type="text/javascript">
-      // Create a new Three.js scene
       const scene = new THREE.Scene();
 
-      // Create a new camera with a 75 degree field of view, aspect ratio based on the window size, near plane at 0.1 units, and far plane at 1000 units
       const camera = new THREE.PerspectiveCamera(
         75,
         window.innerWidth / window.innerHeight,
@@ -23,49 +18,38 @@
         1000
       );
 
-      // Create a new WebGL renderer, and attach it to the canvas element with id "bg"
       const renderer = new THREE.WebGL1Renderer({
         canvas: document.querySelector("#bg")
       });
 
-      // Set the renderer's pixel ratio to match the device pixel ratio, and set its size to match the window size
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
-      
-      // Set the camera's position to (0, 0, 30), and make it look at the origin (0, 0, 0)
       camera.position.set(0,0,30);
       camera.lookAt(0, 0, 0);
 
-      // Render the scene with the camera
       renderer.render(scene, camera);
 
-      // Create a new box geometry with dimensions (4, 6, 7), and a green mesh standard material
       const geometry = new THREE.BoxGeometry(4, 6, 7);
       const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
       const cube = new THREE.Mesh(geometry, material);
-      
-      // Add the cube to the scene
       scene.add(cube);
 
-      // Create a new point light with color white, and position (10, 5, 5)
-      const pointLight = new THREE.PointLight(0xffffff)
+      const pointLight = new THREE.PointLight(0xfffff)
       pointLight.position.set(10,5,5)
-      
-      // Add the point light to the scene
       scene.add(pointLight)
 
-      // Create a point light helper and a grid helper, and add them to the scene
+      // const ambientLight = new THREE.AmbientLight(0xfffff);
+      // scene.add(ambientLight)
+
       const lightHelper = new THREE.PointLightHelper(pointLight)
       const gridHelper = new THREE.GridHelper(200, 50);
       scene.add(lightHelper, gridHelper)
 
-      // Create a new OrbitControls instance, with the camera and renderer as arguments
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-      // Function to create a new star mesh at a random position
       function addStar() {
         const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-        const material = new THREE.MeshStandardMaterial({color: 0xffffff})
+        const material = new THREE.MeshStandardMaterial({color: 0xfffff})
         const star = new THREE.Mesh(geometry, material);
 
         const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
@@ -73,4 +57,23 @@
         scene.add(star)
       }
 
-      // Call addStar 200 times to create a field
+      Array(200).fill().forEach(addStar)
+
+      const textureLoader = new THREE.TextureLoader();
+      const spaceTexture = textureLoader.load('background.jpeg', () =>{
+        scene.background = spaceTexture;
+      });
+
+
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
