@@ -273,6 +273,30 @@
       floor.position.z = -5;
       scene.add(floor);
 
+      // Create a coffee table
+      let coffeeTableGeometry = new THREE.BoxGeometry(10, 0.5, 3);
+      let coffeeTableMaterial = new THREE.MeshBasicMaterial({
+        color: 0x7f5539,
+      });
+      let coffeeTable = new THREE.Mesh(
+        coffeeTableGeometry,
+        coffeeTableMaterial
+      );
+      coffeeTable.position.set(0, .75, 6.5); // Position the table in front of the chairs
+      scene.add(coffeeTable);
+
+      //create coffee table legs
+      let coffeeLegGeometry = new THREE.BoxGeometry(1, 1, 1);
+      let coffeeLegMaterial = new THREE.MeshBasicMaterial({ color: 0x7f5539 });
+
+      let coffeeLeftLeg = new THREE.Mesh(coffeeLegGeometry, coffeeLegMaterial);
+      coffeeLeftLeg.position.set(4, .25, 6.5);
+      scene.add(coffeeLeftLeg);
+
+      let coffeeRightLeg = new THREE.Mesh(coffeeLegGeometry, coffeeLegMaterial);
+      coffeeRightLeg.position.set(-4, .25, 6.5);
+      scene.add(coffeeRightLeg);
+
       //animation loop
 
       function animate() {
