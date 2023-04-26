@@ -28,14 +28,6 @@
 
       renderer.render(scene, camera);
 
-      //cube
-
-      // const geometry = new THREE.BoxGeometry(4, 6, 7);
-      // const material = new THREE.MeshStandardMaterial({ color: 0xfffff });
-      // const cube = new THREE.Mesh(geometry, material);
-
-      // scene.add(cube);
-
       //Lighting
       const pointLight = new THREE.PointLight(0xfffff);
       pointLight.position.set(10, 5, 5);
@@ -73,54 +65,6 @@
       // scene.background = spaceTexture;
 
       //avatar
-
-      const jeffTexture = new THREE.TextureLoader().load(
-        "https://res.cloudinary.com/gimmersta-wallpaper/image/upload/c_fill,f_auto,fl_progressive,q_auto,w_576,h_840/v1638283414/articles/R10961_product.jpg"
-      );
-
-      const jeff = new THREE.Mesh(
-        new THREE.BoxGeometry(3, 3, 3),
-        new THREE.MeshBasicMaterial({ map: jeffTexture })
-      );
-
-      // scene.add(jeff);
-
-      // Moon
-      const moonTexture = new THREE.TextureLoader().load(
-        "https://res.cloudinary.com/gimmersta-wallpaper/image/upload/c_fill,f_auto,fl_progressive,q_auto,w_576,h_840/v1638283414/articles/R10961_product.jpg",
-        function (texture) {
-          console.log("Moon texture loaded successfully.");
-        },
-        function (error) {
-          console.error("Error loading moon texture:", error);
-        }
-      );
-
-      const normalTexture = new THREE.TextureLoader().load(
-        "https://res.cloudinary.com/gimmersta-wallpaper/image/upload/c_fill,f_auto,fl_progressive,q_auto,w_576,h_840/v1638283414/articles/R10961_product.jpg",
-        function (texture) {
-          console.log("Normal texture loaded successfully.");
-        },
-        function (error) {
-          console.error("Error loading normal texture:", error);
-        }
-      );
-
-      const moon = new THREE.Mesh(
-        new THREE.SphereGeometry(3, 32, 32),
-        new THREE.MeshStandardMaterial({
-          map: moonTexture,
-          normalMap: normalTexture,
-        })
-      );
-
-      scene.add(moon);
-
-      moon.position.z = 30;
-      moon.position.setX(-10);
-
-      jeff.position.z = -5;
-      jeff.position.x = 2;
 
       //chair 1
 
