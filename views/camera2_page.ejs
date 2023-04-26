@@ -16,7 +16,7 @@
         3,
         1000
       );
-      console.log(camera.position)
+
 
       const renderer = new THREE.WebGL1Renderer({
         canvas: document.querySelector("#bg"),
@@ -153,8 +153,9 @@
 
       // Create the backrest for the chair
       let backrestGeometry3 = new THREE.BoxGeometry(4, 2, 0.5);
-      let backrestMaterial3 = new THREE.MeshBasicMaterial({ color: 0x808080 });
-      let backrest3 = new THREE.Mesh(backrestGeometry3, backrestMaterial2);
+      const chairMat = new THREE.TextureLoader().load("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT70ACR7nlB69abfvChSuBFIBQVK_hMnIuidQ&usqp=CAU")
+      let backrestMaterial3 = new THREE.MeshBasicMaterial({ map : chairMat });
+      let backrest3 = new THREE.Mesh(backrestGeometry3, backrestMaterial3);
       backrest3.position.y = 2;
       backrest3.position.z = -1.75;
       backrest3.position.x = -8;
@@ -162,7 +163,8 @@
 
       // Create the seat of the chair
       let seatGeometry3 = new THREE.BoxGeometry(4, 0.5, 3);
-      let seatMaterial3 = new THREE.MeshBasicMaterial({ color: 0x800080 });
+      const seatCovers = new THREE.TextureLoader().load("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAAAElBMVEV3w+y44vKJz/Cd2fOHzvCb2POAgCJnAAABAElEQVR4nO3QQQEAIAgEMBTpX9kS9+CxRVhVzo15HTMnJ3glS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS9amrA9EPCoAZylyUQAAAABJRU5ErkJggg==")
+      let seatMaterial3 = new THREE.MeshBasicMaterial({ map : seatCovers });
       let seat3 = new THREE.Mesh(seatGeometry3, seatMaterial3);
       seat3.position.y = 1.5;
       seat3.position.x = -8;
@@ -190,13 +192,13 @@
 
       // Create a back wall for the room
       let backWallGeometry = new THREE.BoxGeometry(window.innerWidth, 8, 0.2);
-      let backWallMaterial = new THREE.MeshBasicMaterial({ color: 0xffa500 });
+      let backWallMaterial = new THREE.MeshBasicMaterial({ color: 0xffa500 });;
       let backWall = new THREE.Mesh(backWallGeometry, backWallMaterial);
       backWall.position.z = -5;
       backWall.position.y = 4;
       scene.add(backWall);
-
-      // Create a floor that intersects with the back wall
+      
+      // Create floor 
       let floorGeometry = new THREE.PlaneGeometry(window.innerWidth, 40);
       let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
       let floor = new THREE.Mesh(floorGeometry, floorMaterial);
@@ -207,8 +209,9 @@
 
       // Create a coffee table
       let coffeeTableGeometry = new THREE.BoxGeometry(10, 0.5, 3);
+      const resinWood = new THREE.TextureLoader().load("https://thumbs.dreamstime.com/b/plastic-water-bowl-colorful-plastic-water-bowl-colorful-white-background-143494869.jpg")
       let coffeeTableMaterial = new THREE.MeshBasicMaterial({
-        color: 0x7f5539,
+        map : resinWood 
       });
       let coffeeTable = new THREE.Mesh(
         coffeeTableGeometry,
@@ -219,13 +222,12 @@
 
       //create coffee table legs
       let coffeeLegGeometry = new THREE.BoxGeometry(1, 1, 1);
-      let coffeeLegMaterial = new THREE.MeshBasicMaterial({ color: 0x7f5539 });
 
-      let coffeeLeftLeg = new THREE.Mesh(coffeeLegGeometry, coffeeLegMaterial);
+      let coffeeLeftLeg = new THREE.Mesh(coffeeLegGeometry, coffeeTableMaterial);
       coffeeLeftLeg.position.set(4, .25, 6.5);
       scene.add(coffeeLeftLeg);
 
-      let coffeeRightLeg = new THREE.Mesh(coffeeLegGeometry, coffeeLegMaterial);
+      let coffeeRightLeg = new THREE.Mesh(coffeeLegGeometry, coffeeTableMaterial);
       coffeeRightLeg.position.set(-4, .25, 6.5);
       scene.add(coffeeRightLeg);
 
