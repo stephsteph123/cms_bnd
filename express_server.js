@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
+app.use(express.urlencoded({ extended: true }));
 
 //get routes
 app.get("/", (req, res) => {
