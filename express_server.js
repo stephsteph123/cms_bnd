@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const PORT = 3000;
 const bodyParser = require('body-parser');
+const {cameraDatabase} = require ('./database');
 
 
 app.set("view engine", "ejs");
@@ -24,10 +25,6 @@ app.get("/login", (req, res) => {
 
 app.get("/dashboard", (req, res) => {
   res.render("dashboard_page");
-});
-
-app.get("/camera1", (req, res) => {
-  res.render("camera1_page");
 });
 
 app.get("/camera2", (req, res) => {
