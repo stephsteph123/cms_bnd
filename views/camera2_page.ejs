@@ -11,11 +11,12 @@
       scene.background = new THREE.Color(0xfffff);
 
       const camera = new THREE.PerspectiveCamera(
-        75,
+        45,
         window.innerWidth / window.innerHeight,
-        0.1,
+        3,
         1000
       );
+      console.log(camera.position)
 
       const renderer = new THREE.WebGL1Renderer({
         canvas: document.querySelector("#bg"),
@@ -24,7 +25,8 @@
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       camera.position.setZ(30);
-      camera.position.setX(-3);
+      camera.position.setX(6.5);
+      camera.position.setY(10);
 
       renderer.render(scene, camera);
 
@@ -44,21 +46,6 @@
 
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-      //stars
-      // function addStar() {
-      //   const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-      //   const material = new THREE.MeshStandardMaterial({ color: 0xfffff });
-      //   const star = new THREE.Mesh(geometry, material);
-
-      //   const [x, y, z] = Array(3)
-      //     .fill()
-      //     .map(() => THREE.MathUtils.randFloatSpread(100));
-      //   star.position.set(x, y, z);
-      //   scene.add(star);
-      // }
-
-      // Array(200).fill().forEach(addStar);
-
       //background
 
       // const spaceTexture = new THREE.TextureLoader().load("https://media.istockphoto.com/id/1292355556/photo/hotel-reception-lobby.jpg?s=612x612&w=0&k=20&c=fz0CfzVB0r2U6QoZ8KpHIOUYpLUICDTIZm1srOKK3u8=");
@@ -67,26 +54,26 @@
       //avatar
 
       //chair 1
-
       // Create a base for the chair
       let baseGeometry = new THREE.BoxGeometry(4, 0.5, 4);
       let baseMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
       let base = new THREE.Mesh(baseGeometry, baseMaterial);
+      base.position.y = 1;
       scene.add(base);
 
       // Create the backrest for the chair
       let backrestGeometry = new THREE.BoxGeometry(4, 2, 0.5);
       let backrestMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
       let backrest = new THREE.Mesh(backrestGeometry, backrestMaterial);
-      backrest.position.y = 1.5;
+      backrest.position.y = 2;
       backrest.position.z = -1.75;
       scene.add(backrest);
 
       // Create the seat of the chair
       let seatGeometry = new THREE.BoxGeometry(4, 0.5, 3);
-      let seatMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
+      let seatMaterial = new THREE.MeshBasicMaterial({ color: 0x800080 });
       let seat = new THREE.Mesh(seatGeometry, seatMaterial);
-      seat.position.y = 0.75;
+      seat.position.y = 1.5;
       scene.add(seat);
 
       // Create legs for the chair
@@ -94,28 +81,28 @@
       let legMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
 
       let frontLeftLeg = new THREE.Mesh(legGeometry, legMaterial);
-      frontLeftLeg.position.set(-1.5, -0.5, 1.5);
+      frontLeftLeg.position.set(-1.5, 0.5, 1.5);
       scene.add(frontLeftLeg);
 
       let frontRightLeg = new THREE.Mesh(legGeometry, legMaterial);
-      frontRightLeg.position.set(1.5, -0.5, 1.5);
+      frontRightLeg.position.set(1.5, 0.5, 1.5);
       scene.add(frontRightLeg);
 
       let backLeftLeg = new THREE.Mesh(legGeometry, legMaterial);
-      backLeftLeg.position.set(-1.5, -0.5, -1.5);
+      backLeftLeg.position.set(-1.5, 0.5, -1.5);
       scene.add(backLeftLeg);
 
       let backRightLeg = new THREE.Mesh(legGeometry, legMaterial);
-      backRightLeg.position.set(1.5, -0.5, -1.5);
+      backRightLeg.position.set(1.5, 0.5, -1.5);
       scene.add(backRightLeg);
 
       //chair 2
-
       // Create a base for the chair
       let baseGeometry2 = new THREE.BoxGeometry(4, 0.5, 4);
       let baseMaterial2 = new THREE.MeshBasicMaterial({ color: 0x808080 });
       let base2 = new THREE.Mesh(baseGeometry2, baseMaterial2);
       base2.position.x = 7; // Move the base to the right
+      base2.position.y = 1;
       scene.add(base2);
 
       // Create the backrest for the chair
@@ -123,16 +110,16 @@
       let backrestMaterial2 = new THREE.MeshBasicMaterial({ color: 0x808080 });
       let backrest2 = new THREE.Mesh(backrestGeometry2, backrestMaterial2);
       backrest2.position.x = 7; // Move the backrest to the right
-      backrest2.position.y = 1.5;
+      backrest2.position.y = 2;
       backrest2.position.z = -1.75;
       scene.add(backrest2);
 
       // Create the seat of the chair
       let seatGeometry2 = new THREE.BoxGeometry(4, 0.5, 3);
-      let seatMaterial2 = new THREE.MeshBasicMaterial({ color: 0x808080 });
+      let seatMaterial2 = new THREE.MeshBasicMaterial({ color: 0x800080 });
       let seat2 = new THREE.Mesh(seatGeometry2, seatMaterial2);
       seat2.position.x = 7; // Move the seat to the right
-      seat2.position.y = 0.75;
+      seat2.position.y = 1.5;
       scene.add(seat2);
 
       // Create legs for the chair
@@ -140,19 +127,19 @@
       let legMaterial2 = new THREE.MeshBasicMaterial({ color: 0x808080 });
 
       let frontLeftLeg2 = new THREE.Mesh(legGeometry2, legMaterial2);
-      frontLeftLeg2.position.set(5.5, -0.5, 1.5); // Move the front left leg to the right
+      frontLeftLeg2.position.set(5.5, 0.5, 1.5); // Move the front left leg to the right
       scene.add(frontLeftLeg2);
 
       let frontRightLeg2 = new THREE.Mesh(legGeometry2, legMaterial2);
-      frontRightLeg2.position.set(8.5, -0.5, 1.5); // Move the front right leg to the right
+      frontRightLeg2.position.set(8.5, 0.5, 1.5); // Move the front right leg to the right
       scene.add(frontRightLeg2);
 
       let backLeftLeg2 = new THREE.Mesh(legGeometry2, legMaterial2);
-      backLeftLeg2.position.set(5.5, -0.5, -1.5); // Move the back left leg to the right
+      backLeftLeg2.position.set(5.5, 0.5, -1.5); // Move the back left leg to the right
       scene.add(backLeftLeg2);
 
       let backRightLeg2 = new THREE.Mesh(legGeometry2, legMaterial2);
-      backRightLeg2.position.set(8.5, -0.5, -1.5); // Move the back right leg to the right
+      backRightLeg2.position.set(8.5, 0.5, -1.5); // Move the back right leg to the right
       scene.add(backRightLeg2);
 
       //chair 3
@@ -161,22 +148,23 @@
       let baseMaterial3 = new THREE.MeshBasicMaterial({ color: 0x808080 });
       let base3 = new THREE.Mesh(baseGeometry2, baseMaterial2);
       base3.position.x = -8;
+      base3.position.y = 1;
       scene.add(base3);
 
       // Create the backrest for the chair
       let backrestGeometry3 = new THREE.BoxGeometry(4, 2, 0.5);
       let backrestMaterial3 = new THREE.MeshBasicMaterial({ color: 0x808080 });
-      let backrest3 = new THREE.Mesh(backrestGeometry2, backrestMaterial2);
-      backrest3.position.y = 1.5;
+      let backrest3 = new THREE.Mesh(backrestGeometry3, backrestMaterial2);
+      backrest3.position.y = 2;
       backrest3.position.z = -1.75;
       backrest3.position.x = -8;
       scene.add(backrest3);
 
       // Create the seat of the chair
       let seatGeometry3 = new THREE.BoxGeometry(4, 0.5, 3);
-      let seatMaterial3 = new THREE.MeshBasicMaterial({ color: 0x808080 });
-      let seat3 = new THREE.Mesh(seatGeometry2, seatMaterial2);
-      seat3.position.y = 0.75;
+      let seatMaterial3 = new THREE.MeshBasicMaterial({ color: 0x800080 });
+      let seat3 = new THREE.Mesh(seatGeometry3, seatMaterial3);
+      seat3.position.y = 1.5;
       seat3.position.x = -8;
       scene.add(seat3);
 
@@ -185,19 +173,19 @@
       let legMaterial3 = new THREE.MeshBasicMaterial({ color: 0x808080 });
 
       let frontLeftLeg3 = new THREE.Mesh(legGeometry3, legMaterial3);
-      frontLeftLeg3.position.set(-6.5, -0.5, 1.5);
+      frontLeftLeg3.position.set(-6.5, 0.5, 1.5);
       scene.add(frontLeftLeg3);
 
       let frontRightLeg3 = new THREE.Mesh(legGeometry3, legMaterial3);
-      frontRightLeg3.position.set(-9.5, -0.5, 1.5);
+      frontRightLeg3.position.set(-9.5, 0.5, 1.5);
       scene.add(frontRightLeg3);
 
       let backLeftLeg3 = new THREE.Mesh(legGeometry3, legMaterial3);
-      backLeftLeg3.position.set(-6.5, -0.5, -1.5);
+      backLeftLeg3.position.set(-6.5, 0.5, -1.5);
       scene.add(backLeftLeg3);
 
       let backRightLeg3 = new THREE.Mesh(legGeometry3, legMaterial3);
-      backRightLeg3.position.set(-9.5, -0.5, -1.5);
+      backRightLeg3.position.set(-9.5, 0.5, -1.5);
       scene.add(backRightLeg3);
 
       // Create a back wall for the room
