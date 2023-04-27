@@ -22,8 +22,9 @@
         canvas: document.querySelector("#bg"),
       });
 
+      const halfWidth = window.innerWidth / 2; 
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(halfWidth, window.innerHeight);
       camera.position.setZ(30);
       camera.position.setX(6.5);
       camera.position.setY(10);
