@@ -12,7 +12,7 @@
       scene.background = new THREE.Color(0xffd17d);
 
       const camera = new THREE.PerspectiveCamera(
-        45,
+        30,
         window.innerWidth / window.innerHeight,
         3,
         1000
@@ -35,13 +35,14 @@
       pointLight.position.set(10, 5, 5);
       scene.add(pointLight);
 
-      //Helpers
-
-      const lightHelper = new THREE.PointLightHelper(pointLight);
-      // const gridHelper = new THREE.GridHelper(200, 50);
-      scene.add(lightHelper);
-
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enablePan = false; 
+      controls.enableZoom = false; 
+      controls.enableRotate = true; 
+      controls.minPolarAngle = Math.PI / 3;
+      controls.maxPolarAngle = Math.PI / 3; 
+      controls.minAzimuthAngle = -Math.PI / 4;
+      controls.maxAzimuthAngle = Math.PI / 4; 
 
       //chair 1
       // Create a base for the chair
@@ -63,8 +64,8 @@
 
       // Create the seat of the chair
       let seatGeometry = new THREE.BoxGeometry(4, 0.5, 3);
-      let seatMaterial22 = new THREE.MeshBasicMaterial({ color: 0x808080 });
-      let seat = new THREE.Mesh(seatGeometry, seatMaterial22);
+      let seatMaterial = new THREE.MeshBasicMaterial({ color: 0x9FC5E8 });
+      let seat = new THREE.Mesh(seatGeometry, seatMaterial);
       seat.position.y = 1.5;
       scene.add(seat);
 
@@ -97,7 +98,6 @@
 
       // Create the backrest for the chair
       let backrestGeometry2 = new THREE.BoxGeometry(4, 2, 0.5);
-      let backrestMaterial2 = new THREE.MeshBasicMaterial({ color: 0x808080 });
       let backrest2 = new THREE.Mesh(backrestGeometry2, chairMaterial);
       backrest2.position.x = 7;
       backrest2.position.y = 2;
@@ -106,8 +106,7 @@
 
       // Create the seat of the chair
       let seatGeometry2 = new THREE.BoxGeometry(4, 0.5, 3);
-      let seatMaterial2 = new THREE.MeshBasicMaterial({ color: 0x800080 });
-      let seat2 = new THREE.Mesh(seatGeometry2, seatMaterial2);
+      let seat2 = new THREE.Mesh(seatGeometry2, seatMaterial);
       seat2.position.x = 7; // Move the seat to the right
       seat2.position.y = 1.5;
       scene.add(seat2);
@@ -131,52 +130,6 @@
       backRightLeg2.position.set(8.5, 0.5, -1.5); // Move the back right leg to the right
       scene.add(backRightLeg2);
 
-      //chair 3
-      // Create a base for the chair
-      let baseGeometry3 = new THREE.BoxGeometry(4, 0.5, 4);
-      let base3 = new THREE.Mesh(baseGeometry3, chairMaterial);
-      base3.position.x = -8;
-      base3.position.y = 1;
-      scene.add(base3);
-
-      // Create the backrest for the chair
-      let backrestGeometry3 = new THREE.BoxGeometry(4, 2, 0.5);
-      let backrest3 = new THREE.Mesh(backrestGeometry3, chairMaterial);
-      backrest3.position.y = 2;
-      backrest3.position.z = -1.75;
-      backrest3.position.x = -8;
-      scene.add(backrest3);
-
-      // Create the seat of the chair
-      let seatGeometry3 = new THREE.BoxGeometry(4, 0.5, 3);
-      const seatCovers = new THREE.TextureLoader().load(
-        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAAAElBMVEV3w+y44vKJz/Cd2fOHzvCb2POAgCJnAAABAElEQVR4nO3QQQEAIAgEMBTpX9kS9+CxRVhVzo15HTMnJ3glS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS5YsWbJkyZIlS9amrA9EPCoAZylyUQAAAABJRU5ErkJggg=="
-      );
-      let seatMaterial3 = new THREE.MeshBasicMaterial({ map: seatCovers });
-      let seat3 = new THREE.Mesh(seatGeometry3, seatMaterial3);
-      seat3.position.y = 1.5;
-      seat3.position.x = -8;
-      scene.add(seat3);
-
-      // Create legs for the chair
-      let legGeometry3 = new THREE.CylinderGeometry(0.25, 0.25, 1, 32);
-
-      let frontLeftLeg3 = new THREE.Mesh(legGeometry3, chairMaterial);
-      frontLeftLeg3.position.set(-6.5, 0.5, 1.5);
-      scene.add(frontLeftLeg3);
-
-      let frontRightLeg3 = new THREE.Mesh(legGeometry3, chairMaterial);
-      frontRightLeg3.position.set(-9.5, 0.5, 1.5);
-      scene.add(frontRightLeg3);
-
-      let backLeftLeg3 = new THREE.Mesh(legGeometry3, chairMaterial);
-      backLeftLeg3.position.set(-6.5, 0.5, -1.5);
-      scene.add(backLeftLeg3);
-
-      let backRightLeg3 = new THREE.Mesh(legGeometry3, chairMaterial);
-      backRightLeg3.position.set(-9.5, 0.5, -1.5);
-      scene.add(backRightLeg3);
-
       // Create a back wall for the room
       let backWallGeometry = new THREE.BoxGeometry(window.innerWidth, 8, 0.2);
       let backWallMaterial = new THREE.MeshBasicMaterial({ color: 0xffd17d });
@@ -187,7 +140,7 @@
 
       // Create floor
       let floorGeometry = new THREE.PlaneGeometry(30, 30);
-      const floorText = new THREE.TextureLoader().load("https://c8.alamy.com/comp/B1T8WK/small-tiles-texture-background-B1T8WK.jpg")
+      const floorText = new THREE.TextureLoader().load("https://static9.depositphotos.com/1098692/1186/i/600/depositphotos_11862858-stock-photo-swimming-pool-tiles.jpg")
       let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xCADDFF, map: floorText});
       let floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.rotation.x = -Math.PI / 2;
@@ -196,9 +149,9 @@
       scene.add(floor);
 
       // Create a coffee table
-      let coffeeTableGeometry = new THREE.BoxGeometry(10, 0.5, 3);
+      let coffeeTableGeometry = new THREE.BoxGeometry(8, 0.5, 3);
       const resinWood = new THREE.TextureLoader().load(
-        "https://thumbs.dreamstime.com/b/plastic-water-bowl-colorful-plastic-water-bowl-colorful-white-background-143494869.jpg"
+        "https://media.istockphoto.com/id/624697496/photo/distressed-wooden-boards.jpg?s=612x612&w=0&k=20&c=Y4j6HgrHByyJeTl235u1m89gRhDCpat8I2z57YkHgSM="
       );
       let coffeeTableMaterial = new THREE.MeshBasicMaterial({
         map: resinWood,
@@ -207,24 +160,24 @@
         coffeeTableGeometry,
         coffeeTableMaterial
       );
-      coffeeTable.position.set(0, 0.75, 6.5); // Position the table in front of the chairs
+      coffeeTable.position.set(3.5, 0.75, 6.5); // Position the table in front of the chairs
       scene.add(coffeeTable);
 
       //create coffee table legs
-      let coffeeLegGeometry = new THREE.BoxGeometry(1, 1, 1);
+      let coffeeLegGeometry = new THREE.BoxGeometry(1, 1, .5);
 
       let coffeeLeftLeg = new THREE.Mesh(
         coffeeLegGeometry,
         coffeeTableMaterial
       );
-      coffeeLeftLeg.position.set(4, 0.25, 6.5);
+      coffeeLeftLeg.position.set(7, 0.25, 6.5);
       scene.add(coffeeLeftLeg);
 
       let coffeeRightLeg = new THREE.Mesh(
         coffeeLegGeometry,
         coffeeTableMaterial
       );
-      coffeeRightLeg.position.set(-4, 0.25, 6.5);
+      coffeeRightLeg.position.set(0, 0.25, 6.5);
       scene.add(coffeeRightLeg);
 
       //animation loop
