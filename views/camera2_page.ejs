@@ -180,6 +180,12 @@
       coffeeRightLeg.position.set(0, 0.25, 6.5);
       scene.add(coffeeRightLeg);
 
+      //side table
+      const geometry = new THREE.CylinderGeometry( 2, 2, 3, 22 ); 
+      const cylinder = new THREE.Mesh( geometry, seatMaterial ); 
+      cylinder.position.set(-5.5, .25, .15)
+      scene.add( cylinder );
+
       //animation loop
 
       function animate() {
