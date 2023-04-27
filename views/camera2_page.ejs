@@ -6,6 +6,10 @@
     <canvas id="bg"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script type = "module">
+      import { createChair } from './chair1.js';
+      createChair(scene);
+    </script>
     <script type="text/javascript">
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xffd17d);
@@ -34,9 +38,6 @@
       pointLight.position.set(10, 5, 5);
       scene.add(pointLight);
 
-      // const ambientLight = new THREE.AmbientLight(0xfffff);
-      // scene.add(ambientLight)
-
       //Helpers
 
       const lightHelper = new THREE.PointLightHelper(pointLight);
@@ -44,13 +45,6 @@
       scene.add(lightHelper);
 
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-      //background
-
-      // const spaceTexture = new THREE.TextureLoader().load("https://media.istockphoto.com/id/1292355556/photo/hotel-reception-lobby.jpg?s=612x612&w=0&k=20&c=fz0CfzVB0r2U6QoZ8KpHIOUYpLUICDTIZm1srOKK3u8=");
-      // scene.background = spaceTexture;
-
-      //avatar
 
       //chair 1
       // Create a base for the chair

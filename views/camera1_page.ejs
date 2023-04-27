@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Camera 1 Page</title>
+  </head>
+  <body>
+    <canvas id="bg1"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="cms_bnd/views/chair1.js"></script>
+    <script>
+      const scene = new THREE.Scene();
+      scene.add(createChair)
+
+      const camera = new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth / window.innerHeight,
+        3,
+        1000
+      );
+
+      const renderer = new THREE.WebGL1Renderer({
+        canvas: document.querySelector("#bg1"),
+      });
+
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      camera.position.setZ(30);
+      camera.position.setX(6.5);
+      camera.position.setY(10);
+
+      renderer.render(scene, camera);
+    </script>
+  </body>
+</html>
