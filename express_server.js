@@ -6,9 +6,6 @@ const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const THREE = require("three");
 const { roomsDatabase, camerasDatabase, usersDatabase } = require("./database");
-const {
-  createChair,
-} = require("/Users/stephanierowe/cms_bnd/cms_bnd/views/chair1.js");
 
 //middlewear
 app.set("view engine", "ejs");
@@ -60,9 +57,13 @@ app.get("/camera2", (req, res) => {
   res.render("camera2_page");
 });
 
-// app.get("/camera1", (req, res) => {
-//   res.render("camera1_page");
-// });
+app.get("/camera1", (req, res) => {
+  res.render("camera1_page");
+});
+
+app.get("/pastfeed", (req, res) => {
+  res.render("past_feed");
+});
 
 //post routes
 app.post("/login", (req, res) => {
