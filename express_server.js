@@ -54,15 +54,30 @@ app.get("/dashboard", (req, res) => {
 });
 
 app.get("/camera2", (req, res) => {
+  let userNow = usersDatabase[req.session.userId];
+  if (userNow) {
   res.render("camera2_page");
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.get("/camera1", (req, res) => {
+  let userNow = usersDatabase[req.session.userId];
+  if (userNow) {
   res.render("camera1_page");
+  } else {
+    res.redirect("/login");
+  }
 });
 
 app.get("/pastfeed", (req, res) => {
+  let userNow = usersDatabase[req.session.userId];
+  if (userNow) {
   res.render("past_feed");
+  } else {
+    res.redirect("/login");
+  }
 });
 
 //post routes
