@@ -29,14 +29,14 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //helper function
-function generateRandomString() {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  for (let i = 0; i < 6; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
+// function generateRandomString() {
+//   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+//   let result = '';
+//   for (let i = 0; i < 6; i++) {
+//     result += characters.charAt(Math.floor(Math.random() * characters.length));
+//   }
+//   return result;
+// }
 
 async function hashPassword(password) {
   const salt = await bcrypt.genSalt();
