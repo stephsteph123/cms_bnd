@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const THREE = require("three");
 const { camerasDatabase, usersDatabase } = require("./database");
+const bcrypt = require('bcrypt');
 
 //middlewear
 app.set("view engine", "ejs");
@@ -26,6 +27,28 @@ app.listen(PORT, () => {
 });
 app.use(express.urlencoded({ extended: true }));
 
+
+//helper function
+function generateRandomString() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < 6; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+async function hashPassword(password) {
+  const salt = await bcrypt.genSalt();
+  const hashedPassword = await bcrypt.hash(password, salt);
+  return hashedPassword;
+}
+
+(async () => {
+  const hashedPassword = await hashPassword("Test1234!");
+  console.log(hashedPassword);
+})();
+
 //get routes
 app.get("/", (req, res) => {
   res.render("login_page");
@@ -41,6 +64,20 @@ app.get("/login", (req, res) => {
   res.render("login_page", templateVars);
   }
 });
+
+// app.get("/register", (req, res) => {
+//   let userNow = usersDatabase[req.session.userId];
+//   if (userNow) {
+//     res.redirect("/dashboard");
+//   } else {
+//     const templateVars = { user: userNow };
+//     if (req.session.error) {
+//       templateVars.error = req.session.error;
+//       req.session.error = null;
+//     }
+//     res.render("register_page", templateVars);
+//   }
+// });
 
 app.get("/dashboard", (req, res) => {
   let userNow = usersDatabase[req.session.userId];
@@ -84,8 +121,33 @@ app.get("/pastfeed", (req, res) => {
   }
 });
 
-//post routes
-app.post("/login", (req, res) => {
+// app.post("/register", async (req, res) => {
+//   const email = req.body.email;
+//   const password = req.body.password;
+//   const id = generateRandomString();
+//   if (!email || !password) {
+//     req.session.error = "Email and password are required";
+//     return res.redirect("/register");
+//   }
+//   for (let userId in usersDatabase) {
+//     if (usersDatabase[userId]["email"] === email) {
+//       req.session.error = "Email already exists";
+//       return res.redirect("/register");
+//     }
+//   }
+//   const hashedPassword = await hashPassword(password);
+//   const newUser = {
+//     id: id,
+//     email: email,
+//     password: hashedPassword,
+//   };
+//   usersDatabase[id] = newUser; 
+//   req.session.userId = id;
+//   res.redirect("/dashboard");
+// });
+
+
+app.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   let userId = "";
@@ -95,22 +157,18 @@ app.post("/login", (req, res) => {
     }
   }
   if (userId === "") {
-    return res
-      .status(403)
-      .send(
-        "Please Confirm You Have Entered The Correct Username And Password"
-      );
+    return res.status(403).send("user has to register");
   }
-  if (password !== usersDatabase[userId]["password"]) {
-    return res
-      .status(403)
-      .send(
-        "Please Confirm You Have Entered The Correct Username And Password"
-      );
+  const hashedPassword = usersDatabase[userId]["password"]; 
+  if (!await bcrypt.compare(password, hashedPassword)) {
+    return res.status(403).send("wrong password");
   }
   req.session.userId = userId;
+  req.session.error = null;
+  req.body.email = email;
   res.redirect("/dashboard");
 });
+
 
 app.post("/logout", (req, res) => {
   delete req.session.userId;

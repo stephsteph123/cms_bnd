@@ -15,12 +15,7 @@ const usersDatabase = {
   id123: {
     id: "id123",
     email: "user@example.com",
-    password: "123",
-  },
-  id456: {
-    id: "id456",
-    email: "user2@example.com",
-    password: "123",
+    password: "$2b$10$K7aHlZ59mBTGxPiqHMzAYu5qQQODY/ovYCiLPFRkl7nknFb1f1Fqy",
   },
 };
 
