@@ -1,18 +1,13 @@
-const roomsDatabase = {
-  r1: {
-    name: "Lobby_A",
-    cameras: ["c1", "c2"],
-  },
-};
-
 const camerasDatabase = {
   c1: {
-    room: "Lobby_A",
     status: "online",
+    noise: "none",
+    movement: "none",
   },
   c2: {
-    room: "Lobby_A",
     status: "online",
+    noise: "none",
+    movement: "none",
   },
 };
 
@@ -30,8 +25,6 @@ const usersDatabase = {
 };
 
 module.exports = {
-  roomsDatabase,
   camerasDatabase,
   usersDatabase,
-  roomsDatabase,
 };

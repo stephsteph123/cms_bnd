@@ -5,7 +5,7 @@ const PORT = 3000;
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const THREE = require("three");
-const { roomsDatabase, camerasDatabase, usersDatabase } = require("./database");
+const { camerasDatabase, usersDatabase } = require("./database");
 
 //middlewear
 app.set("view engine", "ejs");
@@ -18,7 +18,7 @@ app.use(
   })
 );
 app.use((req, res, next) => {
-  console.log("sessionListner", req.session);
+  // console.log("sessionListner", req.session);
   next();
 });
 app.listen(PORT, () => {
@@ -33,7 +33,6 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
   let userNow = usersDatabase[req.session.userId]
-  console.log("/login", userNow)
   if (userNow){
     res.redirect("/dashboard")
   } else {
@@ -56,7 +55,9 @@ app.get("/dashboard", (req, res) => {
 app.get("/camera2", (req, res) => {
   let userNow = usersDatabase[req.session.userId];
   if (userNow) {
-  res.render("camera2_page");
+  camStatus = camerasDatabase.c2.status
+  templateVars = {user: userNow, status: camStatus}
+  res.render("camera2_page", templateVars);
   } else {
     res.redirect("/login");
   }
@@ -65,11 +66,14 @@ app.get("/camera2", (req, res) => {
 app.get("/camera1", (req, res) => {
   let userNow = usersDatabase[req.session.userId];
   if (userNow) {
-  res.render("camera1_page");
+  camStatus = camerasDatabase.c1.status
+  templateVars = {user: userNow, status: camStatus}
+  res.render("camera1_page", templateVars);
   } else {
     res.redirect("/login");
   }
 });
+
 
 app.get("/pastfeed", (req, res) => {
   let userNow = usersDatabase[req.session.userId];

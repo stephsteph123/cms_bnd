@@ -1,12 +1,31 @@
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+
     <title>Camera 1 Page</title>
   </head>
+
   <body>
+    <%- include('partials/_header') %>
+
     <canvas id="bg"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
-    </script>
+    <% if (status !== "online"){ %>
+    <div class="alert alert-danger" role="alert">Check that the camera is online!</div>
+    <% } %>
     <script type="text/javascript">
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xffd17d);
@@ -22,7 +41,6 @@
         canvas: document.querySelector("#bg"),
       });
 
-      const halfWidth = window.innerWidth / 2; 
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       camera.position.setZ(30);
@@ -37,13 +55,13 @@
       scene.add(pointLight);
 
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enablePan = false; 
-      controls.enableZoom = false; 
-      controls.enableRotate = true; 
+      controls.enablePan = false;
+      controls.enableZoom = false;
+      controls.enableRotate = true;
       controls.minPolarAngle = Math.PI / 3;
-      controls.maxPolarAngle = Math.PI / 3; 
+      controls.maxPolarAngle = Math.PI / 3;
       controls.minAzimuthAngle = -Math.PI / 4;
-      controls.maxAzimuthAngle = Math.PI / 4; 
+      controls.maxAzimuthAngle = Math.PI / 4;
 
       //chair 1
       // Create a base for the chair
@@ -109,7 +127,7 @@
       // Create the seat of the chair
       let seatGeometry2 = new THREE.BoxGeometry(4, 0.5, 3);
       let seat2 = new THREE.Mesh(seatGeometry2, seatMaterial);
-      seat2.position.x = 7; 
+      seat2.position.x = 7;
       seat2.position.y = 1.5;
       scene.add(seat2);
 
@@ -117,19 +135,19 @@
       let legGeometry2 = new THREE.CylinderGeometry(0.25, 0.25, 1, 32);
 
       let frontLeftLeg2 = new THREE.Mesh(legGeometry2, chairMaterial);
-      frontLeftLeg2.position.set(5.5, 0.5, 1.5); 
+      frontLeftLeg2.position.set(5.5, 0.5, 1.5);
       scene.add(frontLeftLeg2);
 
       let frontRightLeg2 = new THREE.Mesh(legGeometry2, chairMaterial);
-      frontRightLeg2.position.set(8.5, 0.5, 1.5); 
+      frontRightLeg2.position.set(8.5, 0.5, 1.5);
       scene.add(frontRightLeg2);
 
       let backLeftLeg2 = new THREE.Mesh(legGeometry2, chairMaterial);
-      backLeftLeg2.position.set(5.5, 0.5, -1.5); 
+      backLeftLeg2.position.set(5.5, 0.5, -1.5);
       scene.add(backLeftLeg2);
 
       let backRightLeg2 = new THREE.Mesh(legGeometry2, chairMaterial);
-      backRightLeg2.position.set(8.5, 0.5, -1.5); 
+      backRightLeg2.position.set(8.5, 0.5, -1.5);
       scene.add(backRightLeg2);
 
       //chair 3
@@ -187,8 +205,13 @@
 
       // Create floor
       let floorGeometry = new THREE.PlaneGeometry(30, 30);
-      const floorText = new THREE.TextureLoader().load("https://c8.alamy.com/comp/B1T8WK/small-tiles-texture-background-B1T8WK.jpg")
-      let floorMaterial = new THREE.MeshBasicMaterial({ color: 0xCADDFF, map: floorText});
+      const floorText = new THREE.TextureLoader().load(
+        "https://c8.alamy.com/comp/B1T8WK/small-tiles-texture-background-B1T8WK.jpg"
+      );
+      let floorMaterial = new THREE.MeshBasicMaterial({
+        color: 0xcaddff,
+        map: floorText,
+      });
       let floor = new THREE.Mesh(floorGeometry, floorMaterial);
       floor.rotation.x = -Math.PI / 2;
       floor.position.y = -0.25;
