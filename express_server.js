@@ -4,7 +4,6 @@ const app = express();
 const PORT = 3000;
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
-const THREE = require("three");
 const { camerasDatabase, usersDatabase } = require("./database");
 const bcrypt = require('bcrypt');
 
@@ -29,15 +28,6 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //helper function
-// function generateRandomString() {
-//   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-//   let result = '';
-//   for (let i = 0; i < 6; i++) {
-//     result += characters.charAt(Math.floor(Math.random() * characters.length));
-//   }
-//   return result;
-// }
-
 async function hashPassword(password) {
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -65,20 +55,6 @@ app.get("/login", (req, res) => {
   }
 });
 
-// app.get("/register", (req, res) => {
-//   let userNow = usersDatabase[req.session.userId];
-//   if (userNow) {
-//     res.redirect("/dashboard");
-//   } else {
-//     const templateVars = { user: userNow };
-//     if (req.session.error) {
-//       templateVars.error = req.session.error;
-//       req.session.error = null;
-//     }
-//     res.render("register_page", templateVars);
-//   }
-// });
-
 app.get("/dashboard", (req, res) => {
   let userNow = usersDatabase[req.session.userId];
   if (userNow) {
@@ -104,7 +80,9 @@ app.get("/camera1", (req, res) => {
   let userNow = usersDatabase[req.session.userId];
   if (userNow) {
   camStatus = camerasDatabase.c1.status
-  templateVars = {user: userNow, status: camStatus}
+  camNoise = camerasDatabase.c1.noise
+  camMove = camerasDatabase.c1.movement
+  templateVars = {user: userNow, status: camStatus, noise: camNoise, movement: camMove}
   res.render("camera1_page", templateVars);
   } else {
     res.redirect("/login");
@@ -121,32 +99,38 @@ app.get("/pastfeed", (req, res) => {
   }
 });
 
-// app.post("/register", async (req, res) => {
-//   const email = req.body.email;
-//   const password = req.body.password;
-//   const id = generateRandomString();
-//   if (!email || !password) {
-//     req.session.error = "Email and password are required";
-//     return res.redirect("/register");
-//   }
-//   for (let userId in usersDatabase) {
-//     if (usersDatabase[userId]["email"] === email) {
-//       req.session.error = "Email already exists";
-//       return res.redirect("/register");
-//     }
-//   }
-//   const hashedPassword = await hashPassword(password);
-//   const newUser = {
-//     id: id,
-//     email: email,
-//     password: hashedPassword,
-//   };
-//   usersDatabase[id] = newUser; 
-//   req.session.userId = id;
-//   res.redirect("/dashboard");
-// });
+app.get("/offline", (req, res) => {
+  let userNow = usersDatabase[req.session.userId]
+  if (userNow){
+    res.render("camera_offline")
+  } else {
+  templateVars = {user: userNow}
+  req.session.error = null;
+  res.render("login_page", templateVars);
+  }
+});
+app.get("/motion", (req, res) => {
+  let userNow = usersDatabase[req.session.userId]
+  if (userNow){
+    res.render("motion_detected")
+  } else {
+  templateVars = {user: userNow}
+  req.session.error = null;
+  res.render("login_page", templateVars);
+  }
+});
+app.get("/sound", (req, res) => {
+  let userNow = usersDatabase[req.session.userId]
+  if (userNow){
+    res.render("sound_detected")
+  } else {
+  templateVars = {user: userNow}
+  req.session.error = null;
+  res.render("login_page", templateVars);
+  }
+});
 
-
+//post routes
 app.post("/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;

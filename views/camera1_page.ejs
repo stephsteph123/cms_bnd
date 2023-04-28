@@ -26,6 +26,12 @@
     <% if (status !== "online"){ %>
     <div class="alert alert-danger" role="alert">Check that the camera is online!</div>
     <% } %>
+    <% if (noise !== "none"){ %>
+    <div class="alert alert-danger" role="alert">Noise has been detected!</div>
+    <% } %>
+    <% if (movement !== "none"){ %>
+    <div class="alert alert-danger" role="alert">Movement has been detected!</div>
+    <% } %>
     <script type="text/javascript">
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0xffd17d);
